@@ -4,7 +4,7 @@ from animals import get_all_animals,get_single_animal
 
 # Here's a class. It inherits from another class.
 class HandleRequests(BaseHTTPRequestHandler):
-     def parse_url(self, path):
+    def parse_url(self, path):
         # Just like splitting a string in JavaScript. If the
         # path is "/animals/1", the resulting list will
         # have "" at index 0, "animals" at index 1, and "1"
@@ -26,7 +26,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         return (resource, id)  # This is a tuple
 
     # Here's a class function
-     def _set_headers(self, status):
+    def _set_headers(self, status):
         self.send_response(status)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -43,19 +43,18 @@ class HandleRequests(BaseHTTPRequestHandler):
     # Here's a method on the class that overrides the parent's method.
     # It handles any GET request.
     def do_GET(self):
-        # Set the response code to 'Ok'
-        self._set_headers(200)
-        response = {}  # Default response
+         self._set_headers(200)
+         response = {}  # Default response
 
         # Parse the URL and capture the tuple that is returned
-        (resource, id) = self.parse_url(self.path)
+         (resource, id) = self.parse_url(self.path)
 
         if resource == "animals":
             if id is not None:
-                response = f"{get_single_animal(id)}"
+            response = f"{get_single_animal(id)}"
 
             else:
-                response = f"{get_all_animals()}"
+            response = f"{get_all_animals()}"
 
         self.wfile.write(response.encode())
 
@@ -83,10 +82,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
 # This function is not inside the class. It is the starting
 # point of this application.
-def main():
-    host = ''
-    port = 8088
-    HTTPServer((host, port), HandleRequests).serve_forever()
+    def main():
+        host = ''
+        port = 8088
+        HTTPServer((host, port), HandleRequests).serve_forever()
 
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
