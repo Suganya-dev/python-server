@@ -42,18 +42,3 @@ def get_single_animal(id):
     return requested_animal
 
     
-         def do_GET(self):
-        self._set_headers(200)
-        response = {}  # Default response
-
-        # Parse the URL and capture the tuple that is returned
-        (resource, id) = self.parse_url(self.path)
-
-        if resource == "animals":
-            if id is not None:
-                response = f"{get_single_animal(id)}"
-
-            else:
-                response = f"{get_all_animals()}"
-
-        self.wfile.write(response.encode())
