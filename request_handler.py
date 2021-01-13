@@ -26,7 +26,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         return (resource, id)  # This is a tuple
 
     # Here's a class function
-    def _set_headers(self, status):
+     def _set_headers(self, status):
         self.send_response(status)
         self.send_header('Content-type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
