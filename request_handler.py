@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from animals import get_all_animals, get_single_animal
+from locations import get_all_locations,get_single_location
 
 
 # Here's a class. It inherits from another class.
@@ -56,6 +57,13 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 response = f"{get_all_animals()}"
 
+        if resource == "locations":
+            if id is not None:
+                response = f"{get_single_location(id)}"
+
+            else:
+                response = f"{get_all_locations()}"
+
         self.wfile.write(response.encode())
 
         
@@ -82,10 +90,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
 # This function is not inside the class. It is the starting
 # point of this application.
-    def main():
-        host = ''
-        port = 8088
-        HTTPServer((host, port), HandleRequests).serve_forever()
+def main():
+    host = ''
+    port = 8088
+    HTTPServer((host, port), HandleRequests).serve_forever()
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
