@@ -1,3 +1,5 @@
+from models import Employee
+
 EMPLOYEES = [
     {
       "id": 1,

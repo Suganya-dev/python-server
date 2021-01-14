@@ -1,3 +1,4 @@
+from models import Animal
 ANIMALS = [
     {
         "id": 1,
