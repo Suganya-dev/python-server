@@ -7,5 +7,5 @@ class Location():
         self.id = id
         self.name = name
         self.breed = address
-        self.status = state)
+        self.status = state
        
