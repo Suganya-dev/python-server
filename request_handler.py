@@ -78,19 +78,25 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     response = f"{get_all_locations()}"
 
+            elif resource == "employees":
+                if id is not None:
+                    response = f"{get_single_employee(id)}"
+                else:
+                    response = f"{get_all_employees()}"
+
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
         # `/resource?parameter=value`
-        elif len(parsed) == 3:
-            ( resource, key, value ) = parsed
+            elif len(parsed) == 3:
+                ( resource, key, value ) = parsed
 
-            # Is the resource `locations` and was there a
-            # query parameter that specified the customer
-            # email as a filtering value?
-            if key == "location_id" and resource == "animals":
-                response = get_animals_by_location(value)
+                # Is the resource `locations` and was there a
+                # query parameter that specified the customer
+                # email as a filtering value?
+                if key == "location_id" and resource == "animals":
+                    response = get_animals_by_location(value)
 
-        self.wfile.write(response.encode())
+            self.wfile.write(response.encode())
 
         
         # # This weird code sends a response back to the client
