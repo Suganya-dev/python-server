@@ -73,7 +73,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 response = f"{get_all_employees()}"
 
-            self.wfile.write(response.encode())
+        self.wfile.write(response.encode())
 
         
         # # This weird code sends a response back to the client
