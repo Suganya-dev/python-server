@@ -63,7 +63,7 @@ def get_all_employees():
             # exact order of the parameters defined in the
             # Animal class above.
             employee = Employee (row['id'], row['name'],
-                            row['status'], row['location_id'])
+                            row['address'], row['location_id'])
 
             employees.append(employee.__dict__)
 
@@ -113,7 +113,7 @@ def get_employees_by_location(location_id):
             e.location_id
         FROM employee e
         WHERE e.location_id = ?
-        """,(location_id,))
+        """, (location_id,))
 
         employees=[]
         dataset= db_cursor.fetchall()
