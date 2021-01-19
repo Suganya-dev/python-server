@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from animals import get_all_animals, get_single_animal,create_animal,delete_animal, update_animal,get_animals_by_location,get_animals_by_status
 from locations import get_all_locations,get_single_location,create_location,delete_location,update_location
 from employees import get_all_employees,get_single_employee,create_employee,delete_employee,update_employee,get_employees_by_location
-from customers import get_all_customers,get_single_customer,create_customer,delete_customer,update_customer
+from customers import get_all_customers,get_single_customer,create_customer,delete_customer,update_customer,get_customers_by_email
 
 # Here's a class. It inherits from another class.
 class HandleRequests(BaseHTTPRequestHandler):
@@ -94,20 +94,23 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
         # `/resource?parameter=value`
-            elif len(parsed) == 3:
-                ( resource, key, value ) = parsed
+        elif len(parsed) == 3:
+            ( resource, key, value ) = parsed
 
                 # Is the resource `locations` and was there a
                 # query parameter that specified the customer
                 # email as a filtering value?
-                if key == "location_id" and resource == "animals":
-                    response = get_animals_by_location(value)
+            if key == "location_id" and resource == "animals":
+                response = get_animals_by_location(value)
                 
-                if key == "status" and resource == "animals":
-                    response = get_animals_by_status(value)
+            if key == "status" and resource == "animals":
+                response = get_animals_by_status(value)
 
-                if key == "location_id" and resource == "employees":
-                    response = get_employees_by_location(value)
+            if key == "location_id" and resource == "employees":
+                response = get_employees_by_location(value)
+
+            if key == "email" and resource == "customers":
+                response = get_customers_by_email(value)
 
         self.wfile.write(response.encode())
 
