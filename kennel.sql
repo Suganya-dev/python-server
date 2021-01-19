@@ -75,3 +75,12 @@ SELECT
 	e.location_id
 FROM employee e
 WHERE e.id = 2
+
+SELECT
+	c.id,
+	c.name,
+	c.address,
+	c.email,
+	c.password
+FROM customer c
+WHERE c.id = 3
