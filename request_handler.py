@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from animals import get_all_animals, get_single_animal,create_animal,delete_animal, update_animal,get_animals_by_location,get_animals_by_status
 from locations import get_all_locations,get_single_location,create_location,delete_location,update_location
 from employees import get_all_employees,get_single_employee,create_employee,delete_employee,update_employee,get_employees_by_location
-
+from customers import get_all_customers,get_single_customer
 
 # Here's a class. It inherits from another class.
 class HandleRequests(BaseHTTPRequestHandler):
@@ -84,6 +84,13 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     response = f"{get_all_employees()}"
 
+            if resource == "customers":
+                if id is not None:
+                    response = f"{get_single_customer(id)}"
+
+                else:
+                    response = f"{get_all_customers()}"
+
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
         # `/resource?parameter=value`
@@ -102,7 +109,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                 if key == "location_id" and resource == "employees":
                     response = get_employees_by_location(value)
 
-            self.wfile.write(response.encode())
+        self.wfile.write(response.encode())
 
         
         # # This weird code sends a response back to the client

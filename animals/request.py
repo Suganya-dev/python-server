@@ -8,7 +8,7 @@ ANIMALS = [
         "species": "Dog",
         "locationId": 1,
         "customerId": 4,
-        "status": "Admitted"
+        "status": "Treatment"
     },
     {
         "id": 2,
