@@ -1,9 +1,9 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_single_animal,create_animal,delete_animal, update_animal,get_animals_by_location
+from animals import get_all_animals, get_single_animal,create_animal,delete_animal, update_animal,get_animals_by_location,get_animals_by_status
 from locations import get_all_locations,get_single_location,create_location,delete_location,update_location
-from employees import get_all_employees,get_single_employee,create_employee,delete_employee,update_employee
-
+from employees import get_all_employees,get_single_employee,create_employee,delete_employee,update_employee,get_employees_by_location
+from customers import get_all_customers,get_single_customer,create_customer,delete_customer,update_customer
 
 # Here's a class. It inherits from another class.
 class HandleRequests(BaseHTTPRequestHandler):
@@ -84,6 +84,13 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     response = f"{get_all_employees()}"
 
+            if resource == "customers":
+                if id is not None:
+                    response = f"{get_single_customer(id)}"
+
+                else:
+                    response = f"{get_all_customers()}"
+
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
         # `/resource?parameter=value`
@@ -95,8 +102,14 @@ class HandleRequests(BaseHTTPRequestHandler):
                 # email as a filtering value?
                 if key == "location_id" and resource == "animals":
                     response = get_animals_by_location(value)
+                
+                if key == "status" and resource == "animals":
+                    response = get_animals_by_status(value)
 
-            self.wfile.write(response.encode())
+                if key == "location_id" and resource == "employees":
+                    response = get_employees_by_location(value)
+
+        self.wfile.write(response.encode())
 
         
         # # This weird code sends a response back to the client
@@ -149,6 +162,17 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Encode the new animal and send in response
         self.wfile.write(f"{new_employee}".encode())
 
+        # Initialize new customer
+        new_customer = None
+        # Add a new customer to the list. Don't worry about
+        # the orange squiggle, you'll define the create_customer
+        # function next.
+        if resource == "customers":
+            new_customer = create_customer(post_body)
+
+        # Encode the new animal and send in response
+        self.wfile.write(f"{new_customer}".encode())
+
         # Here's a method on the class that overrides the parent's method.
         # It handles any DELETE request.
     def do_DELETE(self):
@@ -169,6 +193,10 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Delete a single employee from the list
         if resource == "employees":
             delete_employee(id)
+
+        # Delete a single customer from the list
+        if resource == "customers":
+            delete_customer(id)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
@@ -196,6 +224,10 @@ class HandleRequests(BaseHTTPRequestHandler):
          # edit a single location from the list
         if resource == "employees":
             update_employee(id, post_body)
+
+         # edit a single location from the list
+        if resource == "customers":
+            update_customer(id, post_body)
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
