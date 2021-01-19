@@ -1,6 +1,6 @@
 import sqlite3
 import json
-from models import Customers
+from models import Customer
 
 
 CUSTOMERS = [
@@ -37,11 +37,11 @@ def get_all_customers():
         # Write the SQL query to get the information you want
         db_cursor.execute("""
         SELECT
-            a.id,
-            a.name,
-            a.email,
-            a.password,
-            a.place,
+            c.id,
+            c.name,
+            c.address,
+            c.email,
+            c.password
         FROM customer c
         """)
 
@@ -58,8 +58,8 @@ def get_all_customers():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # customer class above.
-            customer = customer(row['id'], row['name'], row['email'],
-                            row['password'], row['place'])
+            customer = Customer (row['id'], row['name'],row['address'],row['email'],
+                            row['password'])
 
             customers.append(customer.__dict__)
 
