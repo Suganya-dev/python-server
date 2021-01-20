@@ -227,21 +227,21 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Encode the new animal and send in response
         self.wfile.write("".encode())
-         # edit a single location from the list
-        if resource == "locations":
-            update_location(id, post_body)
+        #  # edit a single location from the list
+        # if resource == "locations":
+        #     update_location(id, post_body)
 
         
-         # edit a single location from the list
-        if resource == "employees":
-            update_employee(id, post_body)
+        #  # edit a single location from the list
+        # if resource == "employees":
+        #     update_employee(id, post_body)
 
-         # edit a single location from the list
-        if resource == "customers":
-            update_customer(id, post_body)
+        #  # edit a single location from the list
+        # if resource == "customers":
+        #     update_customer(id, post_body)
 
         # Encode the new animal and send in response
-        self.wfile.write("".encode())
+        # self.wfile.write("".encode())
 
 
 # This function is not inside the class. It is the starting
