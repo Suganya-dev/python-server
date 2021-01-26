@@ -87,3 +87,21 @@ SELECT
 	c.password
 FROM customer c
 WHERE c.id = 3
+
+SELECT
+	a.id,
+	a.name animal_name,
+	a.breed,
+	a.status,
+	a.location_id,
+	a.customer_id,
+	l.name location_name,
+	c.name customer_name,
+	c.id customer_id,
+	c.address
+FROM animal a
+JOIN location l
+	ON l.id = a.location_id
+JOIN customer c
+	ON c.id = a.customer_id
+WHERE a.id = 5
