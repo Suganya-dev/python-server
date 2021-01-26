@@ -42,17 +42,15 @@ def get_all_animals():
         db_cursor.execute("""
         SELECT
             a.id,
-            a.name,
+            a.name animal_name,
             a.breed,
             a.status,
             a.location_id,
             a.customer_id,
             l.name location_name,
-            l.address location_address,
             c.name customer_name,
-            c.address customer_address,
-            c.email customer_email,
-            c.password customer_password
+            c.id customer_id,
+            c.address                                                                                                                                                  
         FROM animal a
         JOIN Location l
             ON l.id = a.location_id
@@ -73,15 +71,15 @@ def get_all_animals():
             # Note that the database fields are specified in
             # exact order of the parameters defined in the
             # Animal class above.
-            animal = Animal(row['id'], row['name'], row['breed'],
+            animal = Animal(row['id'], row['animal_name'], row['breed'],
                             row['status'], row['location_id'],
                             row['customer_id'])
 
             # Create a Location instance from the current row
-            location = Location(row['location_id'], row['location_name'], row['location_address'])
+            location = Location(row['location_name'])
 
             # Create a customer instance from the current row
-            customer = Customer(row['customer_id'], row['customer_name'], row['customer_address'],row['customer_email'],row['customer_password'],)
+            customer = Customer(row['customer_id'], row['customer_name'], row['address'])
 
             # Add the dictionary representation of the location to the animal
             animal.location = location.__dict__
@@ -105,12 +103,20 @@ def get_single_animal(id):
         db_cursor.execute("""
         SELECT
             a.id,
-            a.name,
+            a.name animal_name,
             a.breed,
             a.status,
             a.location_id,
-            a.customer_id
+            a.customer_id,
+            l.name location_name,
+            c.name customer_name,
+            c.id customer_id,
+            c.address
         FROM animal a
+        JOIN location l
+            ON l.id = a.location_id
+        JOIN customer c
+            ON c.id = a.customer_id
         WHERE a.id = ?
         """, ( id, ))
 
@@ -118,9 +124,21 @@ def get_single_animal(id):
         data = db_cursor.fetchone()
 
         # Create an animal instance from the current row
-        animal = Animal(data['id'], data['name'], data['breed'],
+        animal = Animal(data['id'], data['animal_name'], data['breed'],
                             data['status'], data['location_id'],
                             data['customer_id'])
+
+         # Create a Location instance from the current row
+        location = Location (data['location_name'])
+
+        # Add the dictionary representation of the location to the animal
+        animal.location = location.__dict__
+
+        # Create a customer instance from the current row
+        customer = Customer(data['customer_id'], data['customer_name'], data['address'])
+
+        # Add the dictionary representation of the location to the animal
+        animal.customer = customer.__dict__
 
         return json.dumps(animal.__dict__)
 
